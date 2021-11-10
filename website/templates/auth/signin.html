@@ -1,0 +1,66 @@
+{% extends 'base.html' %}{% block title %}Signin{% endblock title %} {% block
+content %}
+<h2 class="py-3">SignIn</h2>
+<form method="post">
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input type="text" class="form-control" id="name" name="name" required />
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">Email address</label>
+    <input type="email" class="form-control" id="email" name="email" required />
+  </div>
+  <div class="row">
+    <div class="col-auto row mb-3 align-items-center d-flex">
+      <div class="col-auto">
+        <label for="gender" class="col-form-label">Gender</label>
+      </div>
+      <select class="form-select col-auto" aria-label="Default select example" style="width: auto" id="gender"
+        name="gender" required>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="col-auto">
+      <div class="mb-3 row d-flex align-items-center">
+        <label for="age" class="col-auto form-label col-form-label">Age</label>
+        <input type="number" class="col-auto form-control" style="width: auto" id="age" name="age" required />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-auto">
+      <div class="mb-3 row d-flex align-items-center">
+        <label for="height" class="col-auto form-label col-form-label">Height</label>
+        <div class="col-auto input-group" style="width: auto; height: '100%'">
+          <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" id="height"
+            name="height" required />
+          <span class="input-group-text">cm</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-auto">
+      <div class="mb-3 row d-flex align-items-center">
+        <label for="weight" class="col-auto form-label col-form-label">Weight</label>
+        <div class="col-auto input-group" style="width: auto; height: '100%'">
+          <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" id="weight"
+            name="weight" required />
+          <span class="input-group-text">kg</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <div>
+      <label for="password" class="form-label">Password</label>
+    </div>
+    <input type="password" class="form-control" id="password" name="password" required />
+  </div>
+  <div class="mb-3">
+    <label for="passcnf" class="form-label">Confirm Password</label>
+    <input type="password" class="form-control" id="passcnf" name="passcnf" required />
+  </div>
+  <button type="submit" class="btn btn-primary m-auto">Submit</button>
+</form>
+{% endblock content %}
