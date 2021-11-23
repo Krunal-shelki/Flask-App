@@ -51,6 +51,28 @@ content %}
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-auto">
+      <div class="mb-3 row d-flex align-items-center">
+        <label for="height" class="col-auto form-label col-form-label">Calories Goal</label>
+        <div class="col-auto input-group" style="width: auto; height: '100%'">
+          <input type="number" class="form-control" id="height"
+            name="height" required />
+          <span class="input-group-text">Cals.</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-auto">
+      <div class="mb-3 row d-flex align-items-center">
+        <label for="weight" class="col-auto form-label col-form-label">Water Goal</label>
+        <div class="col-auto input-group" style="width: auto; height: '100%'">
+          <input type="number" class="form-control" id="weight"
+            name="weight" required />
+          <span class="input-group-text">Glasses</span>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="mb-3">
     <div>
       <label for="password" class="form-label">Password</label>
@@ -63,4 +85,6 @@ content %}
   </div>
   <button type="submit" class="btn btn-primary m-auto">Submit</button>
 </form>
+
+<p class="mt-3">Already have an account <a href={{url_for('auth.login')}}>Login</a></p>
 {% endblock content %}

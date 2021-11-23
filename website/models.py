@@ -5,10 +5,11 @@ from sqlalchemy.sql import func
 
 class Entry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.String(10))
     item = db.Column(db.String(50))
     cal = db.Column(db.Float)
     date = db.Column(db.DateTime(timezone=True), default=func.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
 
 class User(db.Model, UserMixin):
@@ -20,4 +21,6 @@ class User(db.Model, UserMixin):
     age = db.Column(db.Integer)
     height = db.Column(db.Float)
     weight = db.Column(db.Float)
-    entries = db.relationship('Entry')
+    cal_goal = db.Column(db.Float)
+    water_goal = db.Column(db.Integer)
+    entries = db.relationship("Entry")
