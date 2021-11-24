@@ -185,11 +185,11 @@ let foodHtml = "";
 let exerciseHtml = "";
 
 food.forEach((ele) => {
-  foodHtml += `<option value=${ele.name}>${ele.name} (${ele.unit})</option>`;
+  foodHtml += `<option value=${ele.name} data-cals=${ele.calories}>${ele.name} (${ele.unit})</option>`;
 });
 
 exercise.forEach((ele) => {
-  exerciseHtml += `<option value=${ele.name}>${ele.name} (${ele.unit})</option>`;
+  exerciseHtml += `<option value=${ele.name} data-cals=${ele.calories}>${ele.name} (${ele.unit})</option>`;
 });
 
 entryName.innerHTML = foodHtml;
@@ -201,14 +201,14 @@ typeOfEntry.addEventListener("change", () =>
 
 entryName.addEventListener("change", () =>
   calculateCal(
-    entryName.selectedOptions[0].getAttribute("value"),
+    entryName.selectedOptions[0].dataset.cals,
     entryCount.value
   )
 );
 
 entryCount.addEventListener("change", () =>
   calculateCal(
-    entryName.selectedOptions[0].getAttribute("value"),
+    entryName.selectedOptions[0].dataset.cals,
     entryCount.value
   )
 );
@@ -237,17 +237,5 @@ let renderForm = (type) => {
 };
 
 let calculateCal = (entry, count) => {
-  if (typeOfEntry.selectedOptions[0].value == "Food") {
-    food.forEach((ele) => {
-      if (ele.name == entry) {
-        caloriesData.value = ele.calories * count;
-      }
-    });
-  } else {
-    exercise.forEach((ele) => {
-      if (ele.name == entry) {
-        caloriesData.value = ele.calories * count;
-      }
-    });
-  }
+  caloriesData.value = entry * count;
 };

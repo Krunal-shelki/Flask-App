@@ -1,6 +1,12 @@
 {% extends 'base.html' %} {% block title %}Home{% endblock title %} {% block
 style %}
 <style>
+  #home {
+    min-height: calc(100vh - 56px);
+  }
+  #progress {
+    min-height: 100vh;
+  }
   .fab-entries {
     position: fixed;
     right: 1rem !important;
@@ -24,7 +30,7 @@ style %}
   }
 
   li.food {
-    background-color: rgba(67, 208, 55, 45%)
+    background-color: rgba(67, 208, 55, 45%);
   }
 
   li.exercise {
@@ -35,17 +41,84 @@ style %}
     background: none;
     border: none;
   }
+  .dashboard-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .dash-card {
+    height: 250px;
+    width: 170px;
+    margin: 0 2em;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 10px;
+    padding: 2.5rem;
+    border: none;
+  }
+  .calories-card {
+    background-color: rgba(216, 107, 218, 40%);
+  }
+  .water-card {
+    background-color: rgba(55, 208, 199, 40%);
+  }
+  .food-card {
+    background-color: rgba(67, 208, 55, 70%);
+  }
+  .exercise-card {
+    background-color: rgba(234, 101, 93, 70%);
+  }
 </style>
 {% endblock style %} {% block content %}
 <section id="home">
   <h1 class="py-3">Hi, {{user.name.split()[0]}}!</h1>
+  <div class="dashboard-cards">
+    <div class="card calories-card dash-card mb-4">
+      <h3>Calories</h3>
+      <div class="cal-scale">
+        <h3>X</h3>
+      </div>
+      <div class="calories-card-data">
+        <h3>200cals</h3>
+      </div>
+    </div>
+    <div class="card water-card dash-card mb-4">
+      <h3>Water</h3>
+      <div class="water-scale">
+        <h3>X</h3>
+      </div>
+      <div class="water-card-data">
+        <h3>200cals</h3>
+      </div>
+    </div>
+    <div class="card food-card dash-card mb-4">
+      <h3>Food</h3>
+      <div class="icon">
+        <i class="bi bi-egg-fried" style="font-size: 2.5rem"></i>
+      </div>
+      <div class="food-card-data">
+        <h3>200cals</h3>
+      </div>
+    </div>
+    <div class="card exercise-card dash-card mb-4">
+      <h3>Exercise</h3>
+      <div class="icon">
+        <i class="bi bi-activity" style="font-size: 2.5rem"></i>
+      </div>
+      <div class="exercise-card-data">
+        <h3>200cals</h3>
+      </div>
+    </div>
+  </div>
 </section>
 <section id="progress">
   <h2>Progress</h2>
-  <div class="card" style="padding: 1rem;">
+  <div class="card" style="padding: 1rem">
     <ul class="list-group list-group-flush" id="entries">
       {% for entry in user.entries %}
-      <li class="entry-item d-flex" data-entry-type={{entry.type}}>
+      <li class="entry-item d-flex" data-entry-type="{{entry.type}}">
         {% if entry.type == "Food" %}
         <div class="icon"><i class="bi bi-egg-fried"></i></div>
         {% else %}
@@ -54,42 +127,66 @@ style %}
         <div class="name-count">
           <div class="entry-name"><b>{{entry.item}}</b></div>
           <div class="entry-count">
-            {% if entry.type == "Food" %}
-            Servings
-            {% else %}
-            Reps
-            {% endif %}
-            - {{entry.count}}</div>
+            {% if entry.type == "Food" %} Servings {% else %} Reps {% endif %} -
+            {{entry.count}}
+          </div>
         </div>
         <div class="entry-cal">{{entry.cal}} cals</div>
-        <button class="del-icon delete-entry" onClick="deleteNote({{entry.id}})"><i
-            class="bi bi-archive-fill"></i></button>
+        <button
+          class="del-icon delete-entry"
+          onClick="deleteNote({{entry.id}})"
+        >
+          <i class="bi bi-archive-fill"></i>
+        </button>
       </li>
       {% endfor %}
     </ul>
   </div>
 </section>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary fab-entries" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+<button
+  type="button"
+  class="btn btn-primary fab-entries"
+  data-bs-toggle="modal"
+  data-bs-target="#staticBackdrop"
+>
   <i class="bi bi-plus-lg"></i>
 </button>
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-dialog-centered">
     <form method="post">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">Entry Form</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="modal-body">
           <div class="col-auto row mb-3 align-items-center d-flex">
             <div class="col-auto">
               <label for="type" class="col-form-label">Type of Entry</label>
             </div>
-            <select class="form-select col-auto" aria-label="Default select example" style="width: auto" id="type"
-              name="type" required>
+            <select
+              class="form-select col-auto"
+              aria-label="Default select example"
+              style="width: auto"
+              id="type"
+              name="type"
+              required
+            >
               <option value="Food" selected>Food</option>
               <option value="Exercise">Exercise</option>
               <option value="Water">Water</option>
@@ -98,17 +195,33 @@ style %}
           <div class="entries">
             <div class="col-auto row mb-3 align-items-center d-flex">
               <div class="col-auto">
-                <label for="entryName" class="col-form-label entrySelect">Name</label>
+                <label for="entryName" class="col-form-label entrySelect"
+                  >Name</label
+                >
               </div>
-              <select class="form-select col-auto entryName" aria-label="Default select example" style="width: auto"
-                id="entryName" name="entryName" required></select>
+              <select
+                class="form-select col-auto entryName"
+                aria-label="Default select example"
+                style="width: auto"
+                id="entryName"
+                name="entryName"
+                required
+              ></select>
             </div>
             <div class="row g-3 mb-3 align-items-center">
               <div class="col-auto">
-                <label for="caloriesData" class="col-form-label">Calories</label>
+                <label for="caloriesData" class="col-form-label"
+                  >Calories</label
+                >
               </div>
               <div class="col-auto">
-                <input type="text" id="caloriesData" name="caloriesData" class="form-control" readonly />
+                <input
+                  type="text"
+                  id="caloriesData"
+                  name="caloriesData"
+                  class="form-control"
+                  readonly
+                />
               </div>
             </div>
             <div class="row g-3 align-items-center">
@@ -116,8 +229,15 @@ style %}
                 <label for="entryCount" class="col-form-label">Count</label>
               </div>
               <div class="col-auto">
-                <input type="number" id="entryCount" name="entryCount" class="form-control" min="1" value="1"
-                  step="1" />
+                <input
+                  type="number"
+                  id="entryCount"
+                  name="entryCount"
+                  class="form-control"
+                  min="1"
+                  value="1"
+                  step="1"
+                />
               </div>
             </div>
           </div>
@@ -127,14 +247,25 @@ style %}
                 <label for="waterCount" class="col-form-label">Glass</label>
               </div>
               <div class="col-auto">
-                <input type="number" id="waterCount" name="waterCount" class="form-control" min="1" value="1"
-                  step="1" />
+                <input
+                  type="number"
+                  id="waterCount"
+                  name="waterCount"
+                  class="form-control"
+                  min="1"
+                  value="1"
+                  step="1"
+                />
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
             Close
           </button>
           <button type="submit" class="btn btn-primary">Submit</button>
@@ -144,5 +275,8 @@ style %}
   </div>
 </div>
 {% endblock content %} {% block scripts %}
-<script type="text/javascript" src="{{ url_for('static', filename='home.js') }}"></script>
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='home.js') }}"
+></script>
 {% endblock scripts %}
