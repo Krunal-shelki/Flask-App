@@ -10,7 +10,7 @@ views = Blueprint("views", __name__)
 @views.route("/", methods=["POST", "GET"])
 @login_required
 def home():
-    pif request.method == "POST":
+    if request.method == "POST":
         type = request.form.get("type")
         print(type)
         if type == "Food" or type == "Exercise":

@@ -18,51 +18,139 @@ style %}
   <h2>Progress</h2>
 </section>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary fab-entries" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+<button
+  type="button"
+  class="btn btn-primary fab-entries"
+  data-bs-toggle="modal"
+  data-bs-target="#staticBackdrop"
+>
   <i class="bi bi-plus-lg"></i>
 </button>
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-dialog-centered">
     <form method="post">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">Entry Form</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="modal-body">
           <div class="col-auto row mb-3 align-items-center d-flex">
             <div class="col-auto">
               <label for="type" class="col-form-label">Type of Entry</label>
             </div>
-            <select class="form-select col-auto" aria-label="Default select example" style="width: auto" id="type"
-              name="type" required>
+            <select
+              class="form-select col-auto"
+              aria-label="Default select example"
+              style="width: auto"
+              id="type"
+              name="type"
+              required
+            >
               <option value="Food" selected>Food</option>
               <option value="Exercise">Exercise</option>
+              <option value="Water">Water</option>
             </select>
           </div>
-          <div class="entires">
+          <div class="entries">
             <div class="col-auto row mb-3 align-items-center d-flex">
               <div class="col-auto">
-                <label for="type" class="col-form-label entryName">Name</label>
+                <label for="entryName" class="col-form-label entrySelect"
+                  >Name</label
+                >
               </div>
-              <select class="form-select col-auto" aria-label="Default select example" style="width: auto" id="type"
-                name="type" required>
-                <option value="Food" selected>Food</option>
-              </select>
+              <select
+                class="form-select col-auto entryName"
+                aria-label="Default select example"
+                style="width: auto"
+                id="entryName"
+                name="entryName"
+                required
+              ></select>
+            </div>
+            <div class="row g-3 mb-3 align-items-center">
+              <div class="col-auto">
+                <label for="caloriesData" class="col-form-label"
+                  >Calories</label
+                >
+              </div>
+              <div class="col-auto">
+                <input
+                  type="text"
+                  id="caloriesData"
+                  name="caloriesData"
+                  class="form-control"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="row g-3 align-items-center">
+              <div class="col-auto">
+                <label for="entryCount" class="col-form-label">Count</label>
+              </div>
+              <div class="col-auto">
+                <input
+                  type="number"
+                  id="entryCount"
+                  name="entryCount"
+                  class="form-control"
+                  min="1"
+                  value="1"
+                  step="1"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="waterEntry d-none">
+            <div class="row g-3 align-items-center">
+              <div class="col-auto">
+                <label for="waterCount" class="col-form-label">Glass</label>
+              </div>
+              <div class="col-auto">
+                <input
+                  type="number"
+                  id="waterCount"
+                  name="waterCount"
+                  class="form-control"
+                  min="1"
+                  value="1"
+                  step="1"
+                />
+              </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
           <button type="submit" class="btn btn-primary">Submit</button>
         </div>
       </div>
     </form>
   </div>
 </div>
-{% endblock content %}
-{% block scripts %}
-<script type="text/javascript" src="{{ url_for('static', filename='home.js') }}"></script>
+{% endblock content %} {% block scripts %}
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='home.js') }}"
+></script>
 {% endblock scripts %}

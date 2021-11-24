@@ -1,3 +1,4 @@
+from sqlalchemy.sql.functions import count
 from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
@@ -8,6 +9,14 @@ class Entry(db.Model):
     type = db.Column(db.String(10))
     item = db.Column(db.String(50))
     cal = db.Column(db.Float)
+    count = db.Column(db.Integer)
+    date = db.Column(db.DateTime(timezone=True), default=func.now())
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+
+class Water(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    waterCount = db.Column(db.Integer)
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
@@ -24,3 +33,4 @@ class User(db.Model, UserMixin):
     cal_goal = db.Column(db.Float)
     water_goal = db.Column(db.Integer)
     entries = db.relationship("Entry")
+    Water_entries = db.relationship("Water")
