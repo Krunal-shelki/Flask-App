@@ -7,8 +7,9 @@ from flask import (
     redirect,
     url_for,
 )
-from sqlalchemy.sql.expression import true
-from sqlalchemy.sql.functions import user
+
+# from sqlalchemy.sql.expression import true
+# from sqlalchemy.sql.functions import user
 from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
@@ -47,6 +48,8 @@ def signin():
         age = request.form.get("age")
         height = request.form.get("height")
         weight = request.form.get("weight")
+        calGoal = request.form.get("calGoal")
+        waterGoal = request.form.get("waterGoal")
         password = request.form.get("password")
         passcnf = request.form.get("passcnf")
 
@@ -71,6 +74,8 @@ def signin():
                 age=age,
                 height=height,
                 weight=weight,
+                water_goal=waterGoal,
+                cal_goal=calGoal,
             )
             db.session.add(new_user)
             db.session.commit()
