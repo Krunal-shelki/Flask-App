@@ -8,7 +8,7 @@ from sqlalchemy.sql import func
 views = Blueprint("views", __name__)
 
 
-# qry = db.session.query(Entry).filter(Entry.date == func.now())
+# qry = db.session.query()
 
 
 @views.route("/", methods=["POST", "GET"])
