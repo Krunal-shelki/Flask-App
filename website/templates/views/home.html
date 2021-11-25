@@ -70,6 +70,31 @@ style %}
   .exercise-card {
     background-color: rgba(234, 101, 93, 70%);
   }
+  .mouse {
+    margin: 2rem auto;
+    height: 100px;
+    width: 50px;
+    border: 1px solid black;
+    border-radius: 25px;
+    position: relative;
+  }
+  .scroll-bar {
+    position: absolute;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background-color: black;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    animation: scroll-down 1s alternate-reverse;
+    animation-iteration-count: infinite;
+  }
+  @keyframes scroll-down {
+    to {
+      transform: translate(-50%, -100%);
+    }
+  }
 </style>
 {% endblock style %} {% block content %}
 <section id="home">
@@ -110,6 +135,11 @@ style %}
       <div class="exercise-card-data">
         <h3>200cals</h3>
       </div>
+    </div>
+  </div>
+  <div class="mouse-animation">
+    <div class="mouse">
+      <div class="scroll-bar"></div>
     </div>
   </div>
 </section>
