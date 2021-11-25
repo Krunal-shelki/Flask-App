@@ -3,6 +3,9 @@ style %}
 <style>
   #home {
     min-height: calc(100vh - 56px);
+    display: flex;
+    flex-direction: column;
+    position: relative;
   }
   #progress {
     min-height: 100vh;
@@ -51,6 +54,7 @@ style %}
     border: none;
   }
   .dashboard-cards {
+    margin-top: 2rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -64,7 +68,7 @@ style %}
     align-items: center;
     justify-content: space-around;
     border-radius: 10px;
-    padding: 2.5rem;
+    padding: 2rem;
     border: none;
   }
   .circle {
@@ -99,6 +103,11 @@ style %}
   .exercise-card {
     background-color: rgba(234, 101, 93, 70%);
   }
+  .mouse-animation {
+    width: 100%;
+    position: absolute;
+    bottom: 2rem;
+  }
   .mouse {
     margin: 2rem auto;
     height: 100px;
@@ -124,6 +133,11 @@ style %}
       transform: translate(-50%, -100%);
     }
   }
+  @media screen and (max-width: 990px) {
+    .mouse-animation {
+      display: none;
+    }
+  }
 </style>
 {% endblock style %} {% block content %}
 <section id="home">
@@ -133,9 +147,9 @@ style %}
       <h3>Calories</h3>
       <div class="cal-scale">
         <div class="circle">
-          <h5>1300</h5>
+          <h5 class="total_cal">1300</h5>
           <div class="line"></div>
-          <h5>1600</h5>
+          <h5>{{user.cal_goal|int}}</h5>
         </div>
       </div>
       <div class="calories-card-data">
@@ -146,9 +160,9 @@ style %}
       <h3>Water</h3>
       <div class="water-scale">
         <div class="circle">
-          <h5>9</h5>
+          <h5 id="total_water">9</h5>
           <div class="line"></div>
-          <h5>12</h5>
+          <h5>{{user.water_goal}}</h5>
         </div>
       </div>
       <div class="water-card-data">
@@ -161,7 +175,7 @@ style %}
         <i class="bi bi-egg-fried" style="font-size: 2.5rem"></i>
       </div>
       <div class="food-card-data">
-        <h3>200cals</h3>
+        <h3><span class="food_cal">200</span> cals</h3>
       </div>
     </div>
     <div class="card exercise-card dash-card mb-4">
@@ -170,7 +184,7 @@ style %}
         <i class="bi bi-activity" style="font-size: 2.5rem"></i>
       </div>
       <div class="exercise-card-data">
-        <h3>200cals</h3>
+        <h3><span class="exercise_cal">200</span> cals</h3>
       </div>
     </div>
   </div>
@@ -181,6 +195,7 @@ style %}
   </div>
 </section>
 <section id="progress">
+  {{res}}
   <h2>Progress</h2>
   <div class="card" style="padding: 1rem">
     <ul class="list-group list-group-flush" id="entries">
@@ -198,7 +213,7 @@ style %}
             {{entry.count}}
           </div>
         </div>
-        <div class="entry-cal">{{entry.cal}} cals</div>
+        <div class="entry-cal">{{entry.cal|int}} cals</div>
         <button
           class="del-icon delete-entry"
           onClick="deleteNote({{entry.id}})"

@@ -3,8 +3,11 @@ from sqlalchemy.sql.expression import false
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager, login_manager
+from flask_marshmallow import Marshmallow
+
 
 db = SQLAlchemy()
+ma = Marshmallow()
 DB_NAME = "database.db"
 
 
@@ -15,6 +18,7 @@ def create_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = false
 
     db.init_app(app)
+    ma.init_app(app)
 
     from .views import views
     from .auth import auth

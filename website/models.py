@@ -1,7 +1,9 @@
+from flask_sqlalchemy import model
 from sqlalchemy.sql.functions import count
-from . import db
+from . import db, ma
 from flask_login import UserMixin
 from sqlalchemy.sql import func
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 
 class Entry(db.Model):
@@ -16,7 +18,7 @@ class Entry(db.Model):
 
 class Water(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    waterCount = db.Column(db.Integer)
+    water_count = db.Column(db.Integer)
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
@@ -34,3 +36,21 @@ class User(db.Model, UserMixin):
     water_goal = db.Column(db.Integer)
     entries = db.relationship("Entry")
     Water_entries = db.relationship("Water")
+
+
+class UserSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = User
+        load_instance = True
+
+
+class EntrySchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Entry
+        load_instance = True
+
+
+class WaterSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Water
+        load_instance = True

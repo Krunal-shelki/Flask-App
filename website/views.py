@@ -1,14 +1,11 @@
 from flask import Blueprint, render_template, request, jsonify
 from flask_login import login_required, current_user
 import json
-from .models import Entry, Water
+from .models import Entry, EntrySchema, Water, WaterSchema
 from . import db
 from sqlalchemy.sql import func
 
 views = Blueprint("views", __name__)
-
-
-# qry = db.session.query()
 
 
 @views.route("/", methods=["POST", "GET"])
@@ -28,7 +25,7 @@ def home():
             db.session.commit()
         elif type == "Water":
             waterCount = request.form.get("waterCount")
-            new_water = Water(waterCount=waterCount, user_id=current_user)
+            new_water = Water(water_count=waterCount, user_id=current_user.id)
             db.session.add(new_water)
             db.session.commit()
     return render_template("/views/home.html", user=current_user)
@@ -45,3 +42,21 @@ def delete_note():
             db.session.delete(entry)
             db.session.commit()
     return jsonify({})
+
+
+@views.route("/cals-data")
+@login_required
+def cals_data():
+    entry = Entry.query.all()
+    entry_schema = EntrySchema(many=True)
+    output = entry_schema.dump(entry)
+    return jsonify({"Entry": output})
+
+
+@views.route("/water-data")
+@login_required
+def water_data():
+    water_entry = Water.query.all()
+    entry_schema = WaterSchema(many=True)
+    output = entry_schema.dump(water_entry)
+    return jsonify({"water": output})

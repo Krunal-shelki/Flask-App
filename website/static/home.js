@@ -156,7 +156,17 @@ let exercise = [
   },
 ];
 
-let delEntryButtons = document.querySelectorAll(".delete-entry");
+document.addEventListener("DOMContentLoaded", function() { 
+
+let typeOfEntry = document.querySelector("#type");
+let entrySelect = document.querySelector(".entrySelect");
+let entryName = document.querySelector(".entryName");
+let caloriesData = document.querySelector("#caloriesData");
+let entryCount = document.querySelector("#entryCount");
+let totalWater = document.querySelector("h5#total_water");
+let totalCal = document.querySelector(".total_cal");
+let foodCals = document.querySelector(".food_cal");
+let exerciseCals = document.querySelector(".exercise_cal");
 
 document.querySelectorAll(".entry-item").forEach((item) => {
   if (item.dataset.entryType == "Food") {
@@ -175,11 +185,36 @@ let deleteNote = (entryId) => {
   });
 };
 
-let typeOfEntry = document.querySelector("#type");
-let entrySelect = document.querySelector(".entrySelect");
-let entryName = document.querySelector(".entryName");
-let caloriesData = document.querySelector("#caloriesData");
-let entryCount = document.querySelector("#entryCount");
+fetch('/water-data')
+  .then(res => res.json())
+  .then(data => {
+    let water_data = data['water']
+    let total_water = 0
+    water_data.forEach(data => {
+      total_water += data['water_count']
+    })
+    return total_water
+  }).then(data => {
+    totalWater.innerHTML = data
+  })
+
+fetch('/cals-data')
+  .then(res => res.json())
+  .then(data => {
+    let cals_data = data['Entry']
+    let food_cals = 0
+    let exercise_cals = 0
+    cals_data.forEach(data => {
+      if(data['type']=='Food'){
+        food_cals += data['cal']
+      }else{
+        exercise_cals += data['cal']
+      }
+    })
+    totalCal.innerHTML = food_cals - exercise_cals
+    foodCals.innerHTML = food_cals
+    exerciseCals.innerHTML = exercise_cals
+  })
 
 let foodHtml = "";
 let exerciseHtml = "";
@@ -239,3 +274,4 @@ let renderForm = (type) => {
 let calculateCal = (entry, count) => {
   caloriesData.value = entry * count;
 };
+})

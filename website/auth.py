@@ -58,13 +58,13 @@ def signin():
         if user:
             flash("User already Exists!", category="error")
         elif len(email) < 4:
-            flash("Email must be greater than 3 charecters", category="error")
+            flash("Email must be greater than 3 charecters!", category="error")
         elif len(name) < 2:
-            flash("name must be greater than 1 charecters", category="error")
+            flash("Name must be greater than 1 charecters!", category="error")
         elif password != passcnf:
-            flash("password does not match to confirm password", category="error")
+            flash("Password does not match to confirm password!", category="error")
         elif len(password) < 7:
-            flash("password must be greater than 6 charecters", category="error")
+            flash("Password must be greater than 6 charecters!", category="error")
         else:
             new_user = User(
                 email=email,
@@ -79,7 +79,7 @@ def signin():
             )
             db.session.add(new_user)
             db.session.commit()
-            flash("acc created", category="success")
+            flash("Account Created!", category="success")
             return redirect(url_for("views.home"))
 
     return render_template("/auth/signin.html", user=current_user)
