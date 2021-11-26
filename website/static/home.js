@@ -156,7 +156,20 @@ let exercise = [
   },
 ];
 
+let deleteNote = (entryId) => {
+  fetch("/delete-entry", {
+    method: "POST",
+    body: JSON.stringify({ entryId: entryId }),
+  }).then((_res) => {
+    window.location.href = "/";
+  });
+};
+
+
 document.addEventListener("DOMContentLoaded", function() { 
+
+
+// let delEntryButtons = document.querySelectorAll(".delete-entry");
 
 let typeOfEntry = document.querySelector("#type");
 let entrySelect = document.querySelector(".entrySelect");
@@ -175,15 +188,6 @@ document.querySelectorAll(".entry-item").forEach((item) => {
     item.classList.add("exercise");
   }
 });
-
-let deleteNote = (entryId) => {
-  fetch("/delete-entry", {
-    method: "POST",
-    body: JSON.stringify({ entryId: entryId }),
-  }).then((_res) => {
-    window.location.href = "/";
-  });
-};
 
 fetch('/water-data')
   .then(res => res.json())
