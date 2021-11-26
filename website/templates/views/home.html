@@ -2,7 +2,7 @@
 style %}
 <style>
   #home {
-    min-height: calc(100vh - 56px);
+    min-height: 650px;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -196,7 +196,7 @@ style %}
 </section>
 <section id="progress">
   {{res}}
-  <h2>Progress</h2>
+  <h2 class="mb-3">Progress</h2>
   <div class="card" style="padding: 1rem">
     <ul class="list-group list-group-flush" id="entries">
       {% for entry in user.entries %}
