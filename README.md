@@ -1,5 +1,5 @@
 # Flask-App
-## *To run this file in your system you need python installed.
+## *To run this file in your system you need python installed*.
 ## Steps to run project:
 - Download the files as zip(and extract it) or clone it in your system
 - Navigate to the project folder which contain main.py file
