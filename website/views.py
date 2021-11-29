@@ -32,7 +32,7 @@ def home():
 
 
 @views.route("/delete-entry", methods=["POST"])
-def delete_note():
+def delete_entry():
     entry = json.loads(request.data)
     entryId = entry["entryId"]
     entry = Entry.query.get(entryId)

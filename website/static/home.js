@@ -156,7 +156,7 @@ let exercise = [
   },
 ];
 
-let deleteNote = (entryId) => {
+let deleteEntry = (entryId) => {
   fetch("/delete-entry", {
     method: "POST",
     body: JSON.stringify({ entryId: entryId }),
