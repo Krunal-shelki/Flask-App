@@ -4,6 +4,7 @@ from . import db, ma
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
+from marshmallow.fields import Nested
 
 
 class Entry(db.Model):
@@ -34,8 +35,10 @@ class User(db.Model, UserMixin):
     weight = db.Column(db.Float)
     cal_goal = db.Column(db.Float)
     water_goal = db.Column(db.Integer)
-    entries = db.relationship("Entry")
-    Water_entries = db.relationship("Water")
+    entries = db.relationship("Entry", backref="entry", cascade="all,delete-orphan")
+    Water_entries = db.relationship(
+        "Water", backref="water", cascade="all,delete-orphan"
+    )
 
 
 class UserSchema(ma.SQLAlchemyAutoSchema):

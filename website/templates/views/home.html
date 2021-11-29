@@ -199,7 +199,9 @@ style %}
   <h2 class="mb-3">Progress</h2>
   <div class="card" style="padding: 1rem">
     <ul class="list-group list-group-flush" id="entries">
-      {% for entry in user.entries %}
+      {% if not user.entries %}
+      <h3>Add Entries!</h3>
+      {% else %} {% for entry in user.entries %}
       <li class="entry-item d-flex" data-entry-type="{{entry.type}}">
         {% if entry.type == "Food" %}
         <div class="icon"><i class="bi bi-egg-fried"></i></div>
@@ -221,7 +223,7 @@ style %}
           <i class="bi bi-archive-fill"></i>
         </button>
       </li>
-      {% endfor %}
+      {% endfor %} {% endif %}
     </ul>
   </div>
 </section>

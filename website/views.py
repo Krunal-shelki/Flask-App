@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template, request, jsonify
 from flask_login import login_required, current_user
 import json
-from .models import Entry, EntrySchema, Water, WaterSchema
+from .models import Entry, EntrySchema, Water, WaterSchema, User
 from . import db
 from sqlalchemy.sql import func
+from marshmallow import schema
 
 views = Blueprint("views", __name__)
 
@@ -13,7 +14,6 @@ views = Blueprint("views", __name__)
 def home():
     if request.method == "POST":
         type = request.form.get("type")
-        print(type)
         if type == "Food" or type == "Exercise":
             entryName = request.form.get("entryName")
             cal = request.form.get("caloriesData")
@@ -36,7 +36,6 @@ def delete_note():
     entry = json.loads(request.data)
     entryId = entry["entryId"]
     entry = Entry.query.get(entryId)
-    print(entry)
     if entry:
         if entry.user_id == current_user.id:
             db.session.delete(entry)
@@ -47,7 +46,7 @@ def delete_note():
 @views.route("/cals-data")
 @login_required
 def cals_data():
-    entry = Entry.query.all()
+    entry = current_user.entries
     entry_schema = EntrySchema(many=True)
     output = entry_schema.dump(entry)
     return jsonify({"Entry": output})
@@ -56,7 +55,7 @@ def cals_data():
 @views.route("/water-data")
 @login_required
 def water_data():
-    water_entry = Water.query.all()
+    water_entry = current_user.Water_entries
     entry_schema = WaterSchema(many=True)
     output = entry_schema.dump(water_entry)
     return jsonify({"water": output})

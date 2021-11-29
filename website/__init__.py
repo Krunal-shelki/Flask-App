@@ -2,7 +2,7 @@ from flask import Flask
 from sqlalchemy.sql.expression import false
 from flask_sqlalchemy import SQLAlchemy
 from os import path
-from flask_login import LoginManager, login_manager
+from flask_login import LoginManager
 from flask_marshmallow import Marshmallow
 
 
@@ -26,7 +26,7 @@ def create_app():
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
 
-    from .models import User, Entry
+    from .models import User
 
     create_database(app)
 
